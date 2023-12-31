@@ -35,7 +35,7 @@ router.post(
 router.get("/", checkAuthorization, getFeedPosts);
 
 //GET POSTS OF A SPECIFIC USER
-router.get("/:userId/posts", checkAuthorization, getUserPosts);
+router.get("/:userId", checkAuthorization, getUserPosts);
 
 //MAKE THE CURRENT USER LIKE OR UNLIKE A POST
 router.patch("/:id/like", checkAuthorization, likePost);

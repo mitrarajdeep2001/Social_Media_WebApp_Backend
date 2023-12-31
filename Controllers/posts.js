@@ -49,6 +49,9 @@ const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
     const post = await Post.find({ userId });
+    if (!post) {
+      res.status(400).json({ error: "No post found" });
+    }
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ error: error.message });
