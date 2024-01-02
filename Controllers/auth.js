@@ -1,15 +1,13 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../Database/Models/User");
-require("../Cloudinary/cloudinaryConfig")
-const uploader = require("../Cloudinary/cloudinaryUploader")
+require("../Cloudinary/cloudinaryConfig");
+const uploader = require("../Cloudinary/cloudinaryUploader");
 
 //USER REGISTRATION CONTROLLER
 const register = async (req, res) => {
   try {
-    console.log(req.file);
-    console.log(req.body);
-    const cloudinaryImageUrl = await uploader(req.file) //Cloudinary file uploader function
+    const cloudinaryImageUrl = await uploader(req.file); //Cloudinary file uploader function
     const {
       firstName,
       lastName,
@@ -81,6 +79,7 @@ const login = async (req, res) => {
       sameSite: "none",
       secure: true,
     });
+    user.password = null;
     res.status(200).json({ message: "User logged in successfully", user });
   } catch (error) {
     res.status(500).json({ error: error.message });
