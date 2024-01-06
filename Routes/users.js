@@ -13,3 +13,5 @@ router.get("/:id/friends", checkAuthorization, getUserFriends)
 router.patch("/:id/:friendId", checkAuthorization, addRemoveFriend)
 
 module.exports = router 
+
+//Note: ':id' is the user's id.

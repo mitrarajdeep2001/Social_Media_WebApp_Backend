@@ -6,7 +6,6 @@ const checkAuthorization = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log(verifyToken);
     const validUser = await User.find({ _id: verifyToken._id });
     if (!validUser) {
       return res.status(401).json({ error: "User not authorized" });

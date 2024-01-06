@@ -6,13 +6,8 @@ const uploader = require("../Cloudinary/cloudinaryUploader");
 //CREATE POST
 const createPost = async (req, res) => {
   try {
-    console.log(req.file);
-    console.log(req.body);
     const cloudinaryImageUrl = await uploader(req.file); //Cloudinary file uploader function
     const { userId, description } = req.body;
-    if (!userId || !description) {
-      return res.status(400).json({ error: "Required fields are missing" });
-    }
     const user = await User.findById(userId);
     const newPost = await Post({
       userId,
@@ -27,7 +22,6 @@ const createPost = async (req, res) => {
     });
     await newPost.save();
     const post = await Post.find();
-    console.log(post);
     return res.status(201).json(post);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -37,7 +31,7 @@ const createPost = async (req, res) => {
 //GET FEED POSTS
 const getFeedPosts = async (req, res) => {
   try {
-    const post = await Post.find();
+    const post = (await Post.find()).reverse();
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json({ error: error.message });
